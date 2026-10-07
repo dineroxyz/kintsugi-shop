@@ -58,9 +58,6 @@ def converted_price(sku: str, currency: str = "USD") -> dict:
     if sku not in PRICES:
         raise HTTPException(status_code=404, detail=f"unknown sku {sku!r}")
     rate = FX_RATES.get(currency)
-    if rate is None:
-        raise HTTPException(status_code=422,
-                            detail=f"unsupported currency {currency!r}")
     return {"sku": sku, "currency": currency,
             "price": round(PRICES[sku] * rate, 2)}
 
